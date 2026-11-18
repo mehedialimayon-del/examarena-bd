@@ -1,14 +1,17 @@
 "use strict";
 const {chromium}=require("playwright");
 const fs=require("node:fs");
-const {pathToFileURL}=require("node:url");
+const http=require("node:http");
 const path=require("node:path");
 (async()=>{
- const browser=await chromium.launch({headless:true});
+ const server=http.createServer((req,res)=>{if(req.url!=="/"&&req.url!=="/index.html"){res.writeHead(404);res.end();return}res.writeHead(200,{"Content-Type":"text/html; charset=utf-8"});res.end(fs.readFileSync(path.resolve("index.html")))});
+ await new Promise(resolve=>server.listen(0,"127.0.0.1",resolve));
+ let browser;
  try{
+  browser=await chromium.launch({headless:true});
   const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
   const errors=[];page.on("pageerror",error=>errors.push(error.message));
-  await page.goto(pathToFileURL(path.resolve("index.html")).href);
+  await page.goto("http://127.0.0.1:"+server.address().port+"/");
   await page.locator("#academyJobs").click();
   await page.locator("#academyCourses button").first().click();
   await page.locator("#courseSave").click();
@@ -39,5 +42,5 @@ const path=require("node:path");
   if(!(await page.locator("#dashboardGoal").innerText()).includes("মেডিকেল ভর্তি"))throw Error("Admission goal not persistent");
   if(errors.length)throw Error("Browser errors: "+errors.join(" | "));
   console.log("PASS: mobile academy → course → save → chapter → quiz → result → dashboard → reload");
- }finally{await browser.close()}
+ }finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve))}
 })().catch(err=>{console.error(err);process.exitCode=1});
