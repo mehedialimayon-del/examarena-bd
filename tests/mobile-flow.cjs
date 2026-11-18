@@ -32,6 +32,12 @@ const path=require("node:path");
   if(!(await page.locator("#bcsLesson").isVisible()))throw Error("Nested BCS lesson is hidden by category navigation");
   await page.locator("#bcsLessonQuiz").click();
   if(await page.locator("#quiz").evaluate(el=>el.classList.contains("hidden")))throw Error("Quiz did not open");
+  page.once("dialog",dialog=>dialog.dismiss());
+  await page.locator('.mobile-nav a[href="#home"]').click();
+  if(!(await page.locator("#quiz").isVisible()))throw Error("Cancelled Home navigation interrupted active quiz");
+  page.once("dialog",dialog=>dialog.dismiss());
+  await page.locator('.mobile-nav a[href="#academy"]').click();
+  if(!(await page.locator("#quiz").isVisible()))throw Error("Cancelled Academy navigation interrupted active quiz");
   for(let i=0;i<15;i++){
    if(i===14){await page.locator("#skip").click();continue}
    await page.locator("#options button").first().click();
