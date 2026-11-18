@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mehedialimayon-del.github.io/examarena-bd/sitemap.xml
