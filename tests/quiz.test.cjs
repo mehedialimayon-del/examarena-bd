@@ -89,3 +89,16 @@ for(const item of chapterChecks.items){
  assert.ok(item.e.length>=12,"Every answer has explanation");
 }
 console.log("PASS: BCS chapter bank runtime validation and provenance checks");
+
+// The chapter explanations must identify the grammatical role in context.
+for(const [questionPart,explanationPart] of [
+ ["দ্রুতগামী' কোন পদ","বিশেষ্যের গতি-সংক্রান্ত বৈশিষ্ট্য"],
+ ["তিনি' কোন পদ","ব্যক্তিনামের পরিবর্তে"],
+ ["লিখছে' কোন পদ","বর্তমানে লেখার কাজ"],
+ ["পাখি' কোন পদ","প্রাণীশ্রেণির নাম"]
+]){
+ const item=chapterChecks.items.find(q=>q.q.includes(questionPart));
+ assert.ok(item,"Question exists: "+questionPart);
+ assert.ok(item.e.includes(explanationPart),"Contextual explanation exists: "+questionPart);
+}
+console.log("PASS: contextual answer explanations");
