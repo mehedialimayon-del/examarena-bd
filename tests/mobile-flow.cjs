@@ -45,6 +45,8 @@ const path=require("node:path");
   await page.locator("#bcsDaysLeft").fill("2");
   await page.locator("#bcsReadiness").selectOption("beginner");
   if(!(await page.locator("#bcsDailyPlan").innerText()).includes("শেষ মুহূর্তের"))throw Error("Two-day BCS revision strategy missing");
+  if(!(await page.locator("#bcsFeasibility").innerText()).includes("নতুন অধ্যায়ের সূচি নয়"))throw Error("Two-day syllabus feasibility warning missing");
+  if(await page.locator("#bcsWeekPreview article").count()!==2)throw Error("Two-day preview should have two entries");
   await page.locator("#bcsSavePlan").click();
   if(!(await page.locator("#bcsPlanStatus").innerText()).includes("সংরক্ষিত"))throw Error("BCS study plan was not saved");
 
@@ -58,6 +60,11 @@ const path=require("node:path");
   if(!(await page.locator("#bcsDailyPlan").innerText()).includes("প্রবেশপত্র"))throw Error("One-day exam checklist missing");
   await page.locator("#bcsDaysLeft").fill("365");
   if(!(await page.locator("#bcsDailyPlan").innerText()).includes("মোট সম্ভাব্য সময়"))throw Error("Long-term BCS time budget missing");
+  if(await page.locator("#bcsWeekPreview article").count()!==7)throw Error("Seven-day preview missing");
+  if(!(await page.locator("#bcsFeasibility").innerText()).includes("প্রাথমিক অধ্যায়"))throw Error("BCS chapter estimate missing");
+  await page.locator("#bcsDaysLeft").fill("-1");
+  if(await page.locator("#bcsWeekPreview article").count()!==0)throw Error("Invalid days retained stale preview");
+  await page.locator("#bcsDaysLeft").fill("365");
 
 
   if(await page.locator("#academyAdmission").isVisible())throw Error("Admission shown after BCS refresh");
