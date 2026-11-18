@@ -56,6 +56,7 @@ $("next").onclick=()=>{if(finished||!answered)return;if(mode==="mock"&&Date.now(
 $("copy").onclick=async()=>{const t="ExamArena BD-তে আমার স্কোর "+points+"/"+active.length+" — https://mehedialimayon-del.github.io/examarena-bd/";try{await navigator.clipboard.writeText(t);$("resultText").textContent="ফলাফল কপি হয়েছে।"}catch{$("resultText").textContent=t}};
 $("clear").onclick=()=>{if(confirm("এই ডিভাইসের সংরক্ষিত স্কোর মুছে ফেলবেন?")){try{localStorage.removeItem("examarena_stats");localStorage.removeItem("examarena_history")}catch{}showStats()}};
 document.addEventListener("keydown",e=>{if(finished||e.altKey||e.ctrlKey||e.metaKey||e.repeat||["INPUT","TEXTAREA","SELECT","BUTTON"].includes(document.activeElement?.tagName))return;const n=Number(e.key);if(n>=1&&n<=4&&!answered){const b=$("options").children[n-1];if(b){e.preventDefault();b.click()}}else if(e.key==="Enter"&&answered&&!$("next").disabled){e.preventDefault();$("next").click()}});
+window.addEventListener("beforeunload",e=>{if(!finished){e.preventDefault();e.returnValue=""}});
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&mode==="mock"&&!finished&&deadline){seconds=Math.max(0,Math.ceil((deadline-Date.now())/1000));if(seconds===0)finish();else $("timer").textContent="বাকি সময়: "+Math.floor(seconds/60)+":"+String(seconds%60).padStart(2,"0")}});
 showStats();
 </script></body></html>
