@@ -136,7 +136,7 @@ function bcsTimeBand(days){return days===0?"zero":days===1?"one":days===2?"two":
 function renderBCSDailyPlan(){
  const batch=$("bcsBatch").value,minutes=Number($("bcsStudyMinutes").value),raw=$("bcsDaysLeft").value,days=raw===""?NaN:Number(raw),readiness=$("bcsReadiness").value,list=$("bcsDailyPlan");
  list.replaceChildren();
- if(!Number.isInteger(days)||days<0||days>1825){const row=document.createElement("p");row.textContent="পরীক্ষার বাকি দিন ০ থেকে ১৮২৫-এর মধ্যে পূর্ণসংখ্যায় লিখুন।";list.append(row);return}
+ if(!Number.isInteger(days)||days<0||days>1825){$("bcsWeekPreview").replaceChildren();$("bcsFeasibility").textContent="সঠিক দিন লিখলে সময়ের হিসাব দেখানো হবে।";const row=document.createElement("p");row.textContent="পরীক্ষার বাকি দিন ০ থেকে ১৮২৫-এর মধ্যে পূর্ণসংখ্যায় লিখুন।";list.append(row);return}
  const band=bcsTimeBand(days),tasks=band==="thirty"?(bcsBatchTasks[batch]||bcsBatchTasks.foundation):bcsSprintTasks[band];
  const intro=document.createElement("p");intro.className="bcs-plan-intro";
  const effectiveDays=Math.max(0,days-1);
