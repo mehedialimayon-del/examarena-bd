@@ -15,12 +15,18 @@ const path=require("node:path");
   await page.goto("http://127.0.0.1:"+server.address().port+"/");
   await page.locator('[data-portal="academy"]').click();
   if(!(await page.locator("#academy").isVisible()))throw Error("Academy screen not visible");
+  // Verify isolated sections and return navigation before entering a course.
+  if(await page.locator("#studyAbroad").isVisible())throw Error("Unrelated study-abroad section visible in Academy");
+  await page.locator("#portalBack").click();
+  if(!(await page.locator("#portalHub").isVisible()))throw Error("Category hub did not return");
+  await page.locator('[data-portal="academy"]').click();
   await page.locator("#academyJobs").click();
   await page.locator("#academyCourses button").first().click();
   await page.locator("#courseSave").click();
   if(!(await page.locator("#courseSaved").innerText()).includes("সংরক্ষিত"))throw Error("Goal save failed");
   await page.locator("#bcsChapterList details").first().locator("summary").click();
   await page.locator("#bcsChapterList button").click();
+  if(!(await page.locator("#bcsLesson").isVisible()))throw Error("Nested BCS lesson is hidden by category navigation");
   await page.locator("#bcsLessonQuiz").click();
   if(await page.locator("#quiz").evaluate(el=>el.classList.contains("hidden")))throw Error("Quiz did not open");
   for(let i=0;i<15;i++){
