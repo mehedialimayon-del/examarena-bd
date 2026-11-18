@@ -1,0 +1,34 @@
+"use strict";
+const {chromium}=require("playwright");
+const fs=require("node:fs");
+const {pathToFileURL}=require("node:url");
+const path=require("node:path");
+(async()=>{
+ const browser=await chromium.launch({headless:true});
+ try{
+  const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+  const errors=[];page.on("pageerror",error=>errors.push(error.message));
+  await page.goto(pathToFileURL(path.resolve("index.html")).href);
+  await page.locator("#academyJobs").click();
+  await page.locator("#academyCourses button").first().click();
+  await page.locator("#courseSave").click();
+  if(!(await page.locator("#courseSaved").innerText()).includes("সংরক্ষিত"))throw Error("Goal save failed");
+  await page.locator("#bcsChapterList details").first().locator("summary").click();
+  await page.locator("#bcsChapterList button").click();
+  await page.locator("#bcsLessonQuiz").click();
+  if(await page.locator("#quiz").evaluate(el=>el.classList.contains("hidden")))throw Error("Quiz did not open");
+  for(let i=0;i<15;i++){
+   await page.locator("#options button").first().click();
+   await page.locator("#next").click();
+  }
+  if(await page.locator("#result").evaluate(el=>el.classList.contains("hidden")))throw Error("Result not shown");
+  if(await page.locator("#chapterProgress").evaluate(el=>el.classList.contains("hidden")))throw Error("Chapter progress not shown");
+  await page.locator('a[href="#home"]').last().click();
+  if(!(await page.locator("#dashboardLatest").innerText()).includes("15"))throw Error("Dashboard did not update");
+  await page.reload();
+  if(!(await page.locator("#dashboardGoal").innerText()).includes("BCS"))throw Error("Goal not persistent");
+  if(!(await page.locator("#dashboardLatest").innerText()).includes("15"))throw Error("Chapter score not persistent");
+  if(errors.length)throw Error("Browser errors: "+errors.join(" | "));
+  console.log("PASS: mobile academy → course → save → chapter → quiz → result → dashboard → reload");
+ }finally{await browser.close()}
+})().catch(err=>{console.error(err);process.exitCode=1});
