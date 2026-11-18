@@ -28,6 +28,19 @@ const path=require("node:path");
   if(await page.locator("#chapterProgress").evaluate(el=>el.classList.contains("hidden")))throw Error("Chapter progress not shown");
   if(await page.locator("#chapterAssessment").evaluate(el=>el.classList.contains("hidden")))throw Error("Full chapter assessment not shown");
   if(!(await page.locator("#chapterAssessment").innerText()).includes("অফিসিয়াল পাস নম্বর নয়"))throw Error("Unofficial assessment disclaimer missing");
+  // Revisit only missed answers; a partial retry must not be a full-chapter assessment.
+  const missedCount=await page.locator('#review [data-outcome]:not([data-outcome="correct"])').count();
+  if(missedCount>0){
+   await page.locator("#retryMistakes").click();
+   if(!(await page.locator("#quiz").isVisible()))throw Error("Mistake retry did not open");
+   for(let n=0;n<missedCount;n++){
+    await page.locator("#options button").first().click();
+    await page.locator("#next").click();
+   }
+   if(!(await page.locator("#result").isVisible()))throw Error("Mistake retry result missing");
+   if(await page.locator("#chapterAssessment").isVisible())throw Error("Partial retry incorrectly marked as full chapter");
+   if(await page.locator("#chapterProgress").isVisible())throw Error("Partial retry incorrectly saved as full chapter progress");
+  }
   await page.locator('a[href="#home"]').last().click();
   if(!(await page.locator("#dashboardLatest").innerText()).includes("15"))throw Error("Dashboard did not update");
   await page.reload();
