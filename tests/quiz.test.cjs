@@ -127,3 +127,6 @@ console.log("PASS: full-length chapter progress persistence guard");
 assert.match(html,/x\.total===bcsLessonQuestions\.length&&x\.score>=0/,"Legacy partial attempts are excluded from chapter dashboard history");
 assert.match(html,/function start\(\)\{if\(!validateBank\(\)\)/,"Quiz validates bank before changing screen");
 console.log("PASS: legacy partial history filtering and pre-navigation validation");
+
+for(const phrase of ["গুরুত্বপূর্ণ লাইন — পরীক্ষার আগে মনে রাখুন","lesson-keypoints","NCTB ২০২৬ নবম-দশম শ্রেণির সরকারি পাঠ্যপুস্তক তালিকা","কোনো বইয়ের হুবহু উদ্ধৃতি"]){assert.ok(html.includes(phrase),"BCS textbook key-point/source missing: "+phrase)}
+console.log("PASS: textbook highlights and provenance disclosures");
