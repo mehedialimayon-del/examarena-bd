@@ -130,3 +130,6 @@ console.log("PASS: legacy partial history filtering and pre-navigation validatio
 
 for(const phrase of ["গুরুত্বপূর্ণ লাইন — পরীক্ষার আগে মনে রাখুন","lesson-keypoints","NCTB ২০২৬ নবম-দশম শ্রেণির সরকারি পাঠ্যপুস্তক তালিকা","কোনো বইয়ের হুবহু উদ্ধৃতি"]){assert.ok(html.includes(phrase),"BCS textbook key-point/source missing: "+phrase)}
 console.log("PASS: textbook highlights and provenance disclosures");
+
+for(const phrase of ["id=\"bcsOfficialUpdates\"","https://bpsc.gov.bd/pages/psc-exams","সাধারণ বিসিএসের ধাপ:","বিশেষ বিসিএস এবং নতুন সংশোধিত বিজ্ঞপ্তিতে"]){assert.ok(html.includes(phrase),"Official BCS information missing: "+phrase)}
+console.log("PASS: official BPSC notice and applicability disclosures");
