@@ -57,3 +57,10 @@ for(const id of ["myDashboard","dashboardGoal","dashboardLatest","dashboardAdvic
  assert.match(html,new RegExp('id="'+id+'"'),id+" exists");
 }
 console.log("PASS: startup order and learner dashboard regression checks");
+
+// Study-abroad content is informational and never promises universal requirements.
+for(const id of ["studyAbroad","myDashboard","academy","bcsLesson"]){assert.match(html,new RegExp('id="'+id+'"'),id+" section present")}
+assert.match(html,/A&amp;N Overseas Education &amp; Consultancy/, "Optional consultancy pathway disclosed");
+assert.match(html,/ExamArena-তে পড়তে এই সেবা নেওয়া বাধ্যতামূলক নয়/, "Consultancy is optional");
+assert.match(html,/দেশ, বিশ্ববিদ্যালয়, ডিগ্রি ও প্রোগ্রামভেদে শর্ত আলাদা/, "Country requirements qualified");
+console.log("PASS: study abroad section content and independence checks");
