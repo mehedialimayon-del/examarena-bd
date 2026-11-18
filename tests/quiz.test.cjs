@@ -19,11 +19,12 @@ for(const q of all)for(let n=0;n<100;n++){
   assert.equal(randomized.o[randomized.a],q.o[q.a],"Correct answer survives shuffle");
   assert.equal(new Set(randomized.o).size,4,"Four distinct choices");
 }
-for(const id of ["start","mock","next","skip","quit","again","copy","clear","export","reviewAll","reviewMistakes","retryMistakes"]){
+for(const id of ["start","mock","next","skip","quit","again","copy","clear","export","reviewAll","reviewMistakes","retryMistakes","historyToggle"]){
  assert.match(html,new RegExp('id="'+id+'"'),id+" button exists");
 }
 assert.match(html,/JSON\.stringify\(h\.slice\(0,50\)\)/,"Keep up to 50 local results");
 assert.match(html,/Number\(x\.score\)<=Number\(x\.total\)/,"Reject invalid stored scores");
+assert.match(html,/historyExpanded\?h:h\.slice\(0,10\)/,"Expandable result history");
 assert.match(html,/beforeunload/,"Active exam navigation warning exists");
 assert.match(html,/const missed=active\.filter\(/,"Retry only missed questions");
 assert.match(html,/\$\("retryMistakes"\)\.disabled=wrong\+skipped===0/,"Disable retry for perfect results");
