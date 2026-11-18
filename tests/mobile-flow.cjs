@@ -15,6 +15,14 @@ const path=require("node:path");
   await page.goto("http://127.0.0.1:"+server.address().port+"/");
   if(!(await page.locator("#portalHub").isVisible()))throw Error("Category hub hidden on initial homepage");
   if(await page.locator("#academy").isVisible())throw Error("Academy leaked into initial homepage");
+  await page.locator("#homeBCS").click();
+  if(!(await page.locator("#bcsRoadmap").isVisible()))throw Error("Home BCS did not open BCS course directly");
+  if(await page.locator("#academyAdmission").isVisible())throw Error("Admission shown after opening BCS from home");
+  await page.reload();
+  if(!(await page.locator("#bcsRoadmap").isVisible()))throw Error("BCS course lost on refresh");
+  if(await page.locator("#academyAdmission").isVisible())throw Error("Admission shown after BCS refresh");
+  await page.locator("#courseBack").click();
+  await page.locator("#portalBack").click();
   await page.locator('[data-portal="academy"]').click();
   if(!(await page.locator("#academy").isVisible()))throw Error("Academy screen not visible");
   // Verify isolated sections and return navigation before entering a course.
