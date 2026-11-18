@@ -21,3 +21,11 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Mobile learner journey smoke test
         run: node tests/mobile-flow.cjs
+      - name: Upload browser failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-browser-failure
+          path: test-artifacts/
+          if-no-files-found: ignore
+          retention-days: 7
