@@ -29,6 +29,14 @@ const path=require("node:path");
   await page.locator("#academyJobs").click();
   await page.locator("#academyCourses button").first().click();
   if(!(await page.locator("#bcsRoadmap").isVisible()))throw Error("BCS-specific pathway missing");
+  if(await page.locator("#officialSyllabus").isVisible())throw Error("Prelim syllabus leaked into BCS rules stage");
+  await page.locator('[data-bcs-stage="written"]').click();
+  if(!(await page.locator("#bcsRoadmap").getAttribute("data-stage")==="written"))throw Error("Written stage did not activate");
+  if(await page.locator("#officialSyllabus").isVisible())throw Error("Prelim syllabus leaked into written stage");
+  await page.locator('[data-bcs-stage="viva"]').click();
+  if(!(await page.locator('[data-bcs-stage="viva"]').getAttribute("aria-pressed")==="true"))throw Error("Viva stage not selected");
+  await page.locator('[data-bcs-stage="prelim"]').click();
+  if(!(await page.locator("#officialSyllabus").isVisible()))throw Error("Prelim syllabus missing when prelim selected");
   if(await page.locator("#academyAdmission").isVisible())throw Error("Admission tab still visible inside BCS course");
   for(const heading of ["পরীক্ষা ও বিধিমালা","প্রিলিমিনারি","লিখিত","ভাইভা"]){if(!(await page.locator("#bcsRoadmap").innerText()).includes(heading))throw Error("BCS stage missing: "+heading)}
 
