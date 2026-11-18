@@ -28,11 +28,16 @@ const path=require("node:path");
   if(await page.locator("#portalHub").isVisible())throw Error("Category hub unexpectedly visible after focused refresh");
   await page.locator("#academyJobs").click();
   await page.locator("#academyCourses button").first().click();
+  if(!(await page.locator("#bcsRoadmap").isVisible()))throw Error("BCS-specific pathway missing");
+  if(await page.locator("#academyAdmission").isVisible())throw Error("Admission tab still visible inside BCS course");
+  for(const heading of ["পরীক্ষা ও বিধিমালা","প্রিলিমিনারি","লিখিত","ভাইভা"]){if(!(await page.locator("#bcsRoadmap").innerText()).includes(heading))throw Error("BCS stage missing: "+heading)}
+
   await page.locator("#courseSave").click();
   if(!(await page.locator("#courseSaved").innerText()).includes("সংরক্ষিত"))throw Error("Goal save failed");
   await page.locator("#bcsChapterList details").first().locator("summary").click();
   await page.locator("#bcsChapterList button").click();
   if(!(await page.locator("#bcsLesson").isVisible()))throw Error("Nested BCS lesson is hidden by category navigation");
+  if(!(await page.locator("#bcsLesson").innerText()).includes("পাঠ প্রস্তুতকারক"))throw Error("Textbook attribution missing");
   await page.locator("#bcsLessonQuiz").click();
   if(await page.locator("#quiz").evaluate(el=>el.classList.contains("hidden")))throw Error("Quiz did not open");
   page.once("dialog",dialog=>dialog.dismiss());
