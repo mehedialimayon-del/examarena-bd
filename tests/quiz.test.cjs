@@ -19,8 +19,10 @@ for(const q of all)for(let n=0;n<100;n++){
   assert.equal(randomized.o[randomized.a],q.o[q.a],"Correct answer survives shuffle");
   assert.equal(new Set(randomized.o).size,4,"Four distinct choices");
 }
-for(const id of ["start","mock","next","skip","quit","again","copy","clear","export","reviewAll","reviewMistakes"]){
+for(const id of ["start","mock","next","skip","quit","again","copy","clear","export","reviewAll","reviewMistakes","retryMistakes"]){
  assert.match(html,new RegExp('id="'+id+'"'),id+" button exists");
 }
 assert.match(html,/beforeunload/,"Active exam navigation warning exists");
+assert.match(html,/const missed=active\.filter\(/,"Retry only missed questions");
+assert.match(html,/\$\("retryMistakes"\)\.disabled=wrong\+skipped===0/,"Disable retry for perfect results");
 console.log("PASS: syntax, 45 unique questions, subject counts, 4500 answer shuffles, controls");
