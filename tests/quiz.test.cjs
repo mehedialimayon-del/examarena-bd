@@ -110,3 +110,13 @@ assert.match(html,/id="chapterAssessment"/,"Chapter assessment status element ex
 assert.match(html,/fullChapter=topic===chapterPracticeTopic&&active\.length===bcsLessonQuestions\.length/,"Assessment only for full chapter quiz");
 assert.match(html,/BCS-এর অফিসিয়াল পাস নম্বর নয়/,"No official pass threshold claim");
 console.log("PASS: full-chapter assessment safeguards");
+
+// Premium focused navigation must retain a safe way back without discarding an active exam.
+for(const id of ["portalHub","portalBack","portalTitle","academy","courseDetail","bcsLesson","quiz","result"]){
+ assert.match(html,new RegExp('id="'+id+'"'),"Portal element exists: "+id);
+}
+assert.match(html,/if\(portalCurrent==="quiz"&&!finished\)/,"Home requires confirmation for an active exam");
+assert.match(html,/if\(portalOpen\(id\)===false\)event\.preventDefault\(\)/,"Cancelled navigation prevents anchor change");
+assert.match(html,/sessionStorage\.setItem\("examarena_portal_screen",id\)/,"Focused section persisted for refresh");
+assert.match(html,/while\(previous==="quiz"\|\|previous==="result"\)/,"Back skips intermediate quiz/result screens");
+console.log("PASS: focused navigation safety and refresh regression checks");
