@@ -23,6 +23,8 @@ const path=require("node:path");
   }
   if(await page.locator("#result").evaluate(el=>el.classList.contains("hidden")))throw Error("Result not shown");
   if(await page.locator("#chapterProgress").evaluate(el=>el.classList.contains("hidden")))throw Error("Chapter progress not shown");
+  if(await page.locator("#chapterAssessment").evaluate(el=>el.classList.contains("hidden")))throw Error("Full chapter assessment not shown");
+  if(!(await page.locator("#chapterAssessment").innerText()).includes("অফিসিয়াল পাস নম্বর নয়"))throw Error("Unofficial assessment disclaimer missing");
   await page.locator('a[href="#home"]').last().click();
   if(!(await page.locator("#dashboardLatest").innerText()).includes("15"))throw Error("Dashboard did not update");
   await page.reload();
