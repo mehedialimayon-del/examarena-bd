@@ -68,3 +68,9 @@ console.log("PASS: study abroad section content and independence checks");
 assert.match(html,/function showAcademy\(group\)\{\$\("academyCourses"\)\.classList\.remove\("hidden"\)/,"Switching academy tabs restores course list");
 assert.match(html,/goal&&goal\.group==="jobs"&&goal\.name==="BCS"\?history\[history\.length-1\]:null/,"BCS result is not shown for other courses");
 console.log("PASS: academy tab visibility and course-scoped dashboard assertions");
+
+// First BCS lesson must include guided practice, worked examples and editorial transparency.
+for(const phrase of ["শেখার লক্ষ্য","শব্দ ও পদ: পার্থক্য","চারটি মৌলিক পদ চেনার কৌশল","বাক্য বিশ্লেষণ: ধাপে ধাপে","নিজে চেষ্টা করুন","অনুশীলনের উত্তর ও ব্যাখ্যা দেখুন","সম্পাদকীয় যাচাই এখনো বাকি"]){
+ assert.ok(html.includes(phrase),"Missing lesson content: "+phrase);
+}
+console.log("PASS: BCS Bangla lesson structure and review disclaimer");
