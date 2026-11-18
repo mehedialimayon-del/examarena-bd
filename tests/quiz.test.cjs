@@ -33,7 +33,7 @@ const ids=[...html.matchAll(/id="([^"]+)"/g)].map(x=>x[1]);
 assert.equal(new Set(ids).size,ids.length,"HTML IDs must be unique");
 const referenced=[...script[1].matchAll(/\\$\\("([^"]+)"\\)/g)].map(x=>x[1]);
 for(const id of referenced)assert.ok(ids.includes(id),"Script references existing #"+id);
-for(const anchor of ["home","examTracks","subjects","mockArea","historyArea"])assert.ok(ids.includes(anchor),"Navigation anchor "+anchor);
+for(const anchor of ["home","academy","examTracks","subjects","mockArea","historyArea"])assert.ok(ids.includes(anchor),"Navigation anchor "+anchor);
 for(const track of ["bcs","bank","university","teacher","ielts","skills"])assert.match(html,new RegExp('data-track="'+track+'"'),track+" preparation card");
 assert.match(html,/ভিত্তিমূলক অনুশীলন/,"Foundation practice clearly labeled");
 assert.match(html,/IELTS Mock Test-এর বিকল্প নয়/,"IELTS limitations disclosed");
@@ -41,3 +41,8 @@ assert.match(html,/beforeunload/,"Active exam navigation warning exists");
 assert.match(html,/const missed=active\.filter\(/,"Retry only missed questions");
 assert.match(html,/\$\("retryMistakes"\)\.disabled=wrong\+skipped===0/,"Disable retry for perfect results");
 console.log("PASS: syntax, 45 unique questions, subject counts, 4500 answer shuffles, controls");
+
+assert.match(html,/id="academyJobs"/,"job academy tab");
+assert.match(html,/id="academyAdmission"/,"admission academy tab");
+assert.match(html,/class="mobile-nav"/,"mobile bottom navigation");
+assert.match(html,/পূর্ণ কোর্স প্রস্তুত হচ্ছে/,"unavailable courses clearly labeled");
