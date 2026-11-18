@@ -29,6 +29,11 @@ assert.match(html,/!Array\.isArray\(nextQuestions\)\|\|nextQuestions\.length===0
 assert.match(html,/deadline=0;const s=read\(\)/,"Reset deadline on finish");
 assert.match(html,/mockDuration=count\*30/,"Mock duration scales with question count");
 assert.match(html,/\[10,20,30\]\.includes\(count\)/,"Only supported mock sizes");
+const ids=[...html.matchAll(/id="([^"]+)"/g)].map(x=>x[1]);
+assert.equal(new Set(ids).size,ids.length,"HTML IDs must be unique");
+const referenced=[...script[1].matchAll(/\\$\\("([^"]+)"\\)/g)].map(x=>x[1]);
+for(const id of referenced)assert.ok(ids.includes(id),"Script references existing #"+id);
+for(const anchor of ["home","subjects","mockArea","historyArea"])assert.ok(ids.includes(anchor),"Navigation anchor "+anchor);
 assert.match(html,/beforeunload/,"Active exam navigation warning exists");
 assert.match(html,/const missed=active\.filter\(/,"Retry only missed questions");
 assert.match(html,/\$\("retryMistakes"\)\.disabled=wrong\+skipped===0/,"Disable retry for perfect results");
