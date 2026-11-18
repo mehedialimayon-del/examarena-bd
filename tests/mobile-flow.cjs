@@ -57,6 +57,7 @@ const path=require("node:path");
   }
   await page.locator("#portalBack").click();
   if(!(await page.locator("#bcsLesson").isVisible()))throw Error("Back from result did not restore BCS lesson");
+  if(await page.locator("#result").isVisible())throw Error("Result remains visible after returning to lesson");
   await page.locator('a[href="#home"]').last().click();
   if(!(await page.locator("#dashboardLatest").innerText()).includes("15"))throw Error("Dashboard did not update");
   await page.reload();
@@ -66,7 +67,7 @@ const path=require("node:path");
   if(saved.length!==1||saved[0].chapterId!=="bcs-bangla-grammar-01"||saved[0].total!==15)throw Error("Full chapter history missing or partial retry was persisted");
   if(!Number.isInteger(saved[0].score)||saved[0].score<0||saved[0].score>15)throw Error("Invalid saved chapter score");
   // Switching to an unrelated course must not show BCS chapter scores.
-  await page.locator('a[href="#academy"]').first().click();
+  await page.locator('.mobile-nav a[href="#academy"]').click();
   if(!(await page.locator("#academy").isVisible()))throw Error("Academy navigation from results failed");
   await page.locator("#academyAdmission").click();
   await page.locator("#academyCourses button").first().click();
