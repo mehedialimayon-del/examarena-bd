@@ -28,6 +28,13 @@ const path=require("node:path");
   await page.reload();
   if(!(await page.locator("#dashboardGoal").innerText()).includes("BCS"))throw Error("Goal not persistent");
   if(!(await page.locator("#dashboardLatest").innerText()).includes("15"))throw Error("Chapter score not persistent");
+  // Switching to an unrelated course must not show BCS chapter scores.
+  await page.locator("#academyAdmission").click();
+  await page.locator("#academyCourses button").first().click();
+  await page.locator("#courseSave").click();
+  if(!(await page.locator("#dashboardLatest").innerText()).includes("এই নির্বাচিত কোর্সে"))throw Error("BCS score leaked into admission dashboard");
+  await page.reload();
+  if(!(await page.locator("#dashboardGoal").innerText()).includes("মেডিকেল ভর্তি"))throw Error("Admission goal not persistent");
   if(errors.length)throw Error("Browser errors: "+errors.join(" | "));
   console.log("PASS: mobile academy → course → save → chapter → quiz → result → dashboard → reload");
  }finally{await browser.close()}
