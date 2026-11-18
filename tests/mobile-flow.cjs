@@ -13,12 +13,15 @@ const path=require("node:path");
   page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
   const errors=[];page.on("pageerror",error=>errors.push(error.message));
   await page.goto("http://127.0.0.1:"+server.address().port+"/");
+  if(!(await page.locator("#portalHub").isVisible()))throw Error("Category hub hidden on initial homepage");
+  if(await page.locator("#academy").isVisible())throw Error("Academy leaked into initial homepage");
   await page.locator('[data-portal="academy"]').click();
   if(!(await page.locator("#academy").isVisible()))throw Error("Academy screen not visible");
   // Verify isolated sections and return navigation before entering a course.
   if(await page.locator("#studyAbroad").isVisible())throw Error("Unrelated study-abroad section visible in Academy");
   await page.locator("#portalBack").click();
   if(!(await page.locator("#portalHub").isVisible()))throw Error("Category hub did not return");
+  if(await page.locator("#academy").isVisible())throw Error("Academy leaked into homepage after Back");
   await page.locator('[data-portal="academy"]').click();
   await page.reload();
   if(!(await page.locator("#academy").isVisible()))throw Error("Focused Academy screen was lost on refresh");
