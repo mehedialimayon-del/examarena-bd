@@ -79,6 +79,10 @@ const path=require("node:path");
   await page.locator("#bcsChapterList details").first().locator("summary").click();
   await page.locator("#bcsChapterList button").click();
   if(!(await page.locator("#bcsLesson").isVisible()))throw Error("Nested BCS lesson is hidden by category navigation");
+  await page.locator('input[name="bcsMemoryAnswer"][value="adjective"]').check();
+  await page.locator("#bcsMemoryCheck").click();
+  if(!(await page.locator("#bcsMemoryFeedback").innerText()).includes("সঠিক"))throw Error("Memory mini challenge feedback failed");
+
   if(!(await page.locator("#bcsLesson").innerText()).includes("পাঠ প্রস্তুতকারক"))throw Error("Textbook attribution missing");
   await page.locator("#bcsLessonQuiz").click();
   if(await page.locator("#quiz").evaluate(el=>el.classList.contains("hidden")))throw Error("Quiz did not open");
