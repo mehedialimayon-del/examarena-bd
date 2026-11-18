@@ -34,9 +34,17 @@ const path=require("node:path");
   }
   await page.locator("#homeBCS").click();
   if(!(await page.locator("#bcsRoadmap").isVisible()))throw Error("Home BCS did not open BCS course directly");
+  await page.locator("#bcsBatch").selectOption("prelim");
+  await page.locator("#bcsStudyMinutes").selectOption("60");
+  await page.locator("#bcsSavePlan").click();
+  if(!(await page.locator("#bcsPlanStatus").innerText()).includes("সংরক্ষিত"))throw Error("BCS study plan was not saved");
+
   if(await page.locator("#academyAdmission").isVisible())throw Error("Admission shown after opening BCS from home");
   await page.reload();
   if(!(await page.locator("#bcsRoadmap").isVisible()))throw Error("BCS course lost on refresh");
+  if(await page.locator("#bcsBatch").inputValue()!=="prelim")throw Error("BCS batch lost on refresh");
+  if(await page.locator("#bcsStudyMinutes").inputValue()!=="60")throw Error("BCS daily study time lost on refresh");
+
   if(await page.locator("#academyAdmission").isVisible())throw Error("Admission shown after BCS refresh");
   await page.locator('a[href="#home"]').first().click();
   if(!(await page.locator("#portalHub").isVisible()))throw Error("Home hub missing after BCS direct route");
