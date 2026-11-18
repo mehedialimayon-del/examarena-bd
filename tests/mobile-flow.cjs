@@ -61,6 +61,11 @@ const path=require("node:path");
   await page.locator("#bcsDaysLeft").fill("365");
   if(!(await page.locator("#bcsDailyPlan").innerText()).includes("মোট সম্ভাব্য সময়"))throw Error("Long-term BCS time budget missing");
   if(await page.locator("#bcsWeekPreview article").count()!==7)throw Error("Seven-day preview missing");
+  await page.locator("#bcsWeekNext").click();
+  if(!(await page.locator("#bcsWeekRange").innerText()).includes("৮–১৪"))throw Error("BCS next-week navigation failed");
+  await page.locator("#bcsWeekPrev").click();
+  if(!(await page.locator("#bcsWeekRange").innerText()).includes("১–৭"))throw Error("BCS previous-week navigation failed");
+
   const beforeBCS=await page.locator("#bcsCompletedCount").innerText();
   const beforeRemaining=await page.locator("#bcsFeasibility").innerText();
   await page.locator("#bcsWeekPreview article input[type=checkbox]").first().check();
