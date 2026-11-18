@@ -25,6 +25,8 @@ for(const id of ["start","mock","next","skip","quit","again","copy","clear","exp
 assert.match(html,/JSON\.stringify\(h\.slice\(0,50\)\)/,"Keep up to 50 local results");
 assert.match(html,/Number\(x\.score\)<=Number\(x\.total\)/,"Reject invalid stored scores");
 assert.match(html,/historyExpanded\?h:h\.slice\(0,10\)/,"Expandable result history");
+assert.match(html,/!Array\.isArray\(nextQuestions\)\|\|nextQuestions\.length===0/,"Reject empty quizzes");
+assert.match(html,/deadline=0;const s=read\(\)/,"Reset deadline on finish");
 assert.match(html,/beforeunload/,"Active exam navigation warning exists");
 assert.match(html,/const missed=active\.filter\(/,"Retry only missed questions");
 assert.match(html,/\$\("retryMistakes"\)\.disabled=wrong\+skipped===0/,"Disable retry for perfect results");
