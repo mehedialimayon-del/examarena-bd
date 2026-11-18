@@ -21,8 +21,8 @@ const path=require("node:path");
   await page.reload();
   if(!(await page.locator("#bcsRoadmap").isVisible()))throw Error("BCS course lost on refresh");
   if(await page.locator("#academyAdmission").isVisible())throw Error("Admission shown after BCS refresh");
-  await page.locator("#courseBack").click();
-  await page.locator("#portalBack").click();
+  await page.locator('a[href="#home"]').first().click();
+  if(!(await page.locator("#portalHub").isVisible()))throw Error("Home hub missing after BCS direct route");
   await page.locator('[data-portal="academy"]').click();
   if(!(await page.locator("#academy").isVisible()))throw Error("Academy screen not visible");
   // Verify isolated sections and return navigation before entering a course.
