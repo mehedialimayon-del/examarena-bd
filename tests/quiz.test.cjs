@@ -74,3 +74,18 @@ for(const phrase of ["শেখার লক্ষ্য","শব্দ ও প�
  assert.ok(html.includes(phrase),"Missing lesson content: "+phrase);
 }
 console.log("PASS: BCS Bangla lesson structure and review disclaimer");
+
+// Execute the chapter question bank and its validator independently of the browser.
+const chapterSource=script[1];
+const chapterStart=chapterSource.indexOf("const bcsLessonQuestions=");
+const chapterEnd=chapterSource.indexOf("function openBCSLesson()",chapterStart);
+assert.ok(chapterStart>=0&&chapterEnd>chapterStart,"Chapter bank block found");
+const chapterChecks=vm.runInNewContext(chapterSource.slice(chapterStart,chapterEnd)+";({valid:validateBCSLessonBank(),items:bcsLessonQuestions})");
+assert.equal(chapterChecks.valid,true,"15 chapter questions pass structural checks");
+assert.equal(chapterChecks.items.length,15,"Exactly 15 chapter questions");
+for(const item of chapterChecks.items){
+ assert.equal(item.sourceType,"original","Chapter question is original, not claimed past paper");
+ assert.equal(item.reviewStatus,"editorial-pending","No unverified editorial approval claim");
+ assert.ok(item.e.length>=12,"Every answer has explanation");
+}
+console.log("PASS: BCS chapter bank runtime validation and provenance checks");
