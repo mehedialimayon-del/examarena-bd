@@ -46,6 +46,9 @@ const path=require("node:path");
   await page.reload();
   if(!(await page.locator("#dashboardGoal").innerText()).includes("BCS"))throw Error("Goal not persistent");
   if(!(await page.locator("#dashboardLatest").innerText()).includes("15"))throw Error("Chapter score not persistent");
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("examarena_chapter_progress_v1")||"[]"));
+  if(saved.length!==1||saved[0].chapterId!=="bcs-bangla-grammar-01"||saved[0].total!==15)throw Error("Full chapter history missing or partial retry was persisted");
+  if(!Number.isInteger(saved[0].score)||saved[0].score<0||saved[0].score>15)throw Error("Invalid saved chapter score");
   // Switching to an unrelated course must not show BCS chapter scores.
   await page.locator("#academyAdmission").click();
   await page.locator("#academyCourses button").first().click();
