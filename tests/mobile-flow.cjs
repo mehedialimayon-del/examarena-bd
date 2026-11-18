@@ -15,6 +15,17 @@ const path=require("node:path");
   await page.goto("http://127.0.0.1:"+server.address().port+"/");
   if(!(await page.locator("#portalHub").isVisible()))throw Error("Category hub hidden on initial homepage");
   if(await page.locator("#academy").isVisible())throw Error("Academy leaked into initial homepage");
+  for(const key of ["government","bank","private","defense","academic","english"]){
+   await page.locator(`[data-career="${key}"]`).click();
+   if(!(await page.locator("#careerHub").isVisible()))throw Error("Career sector not visible: "+key);
+   if(await page.locator("#academy").isVisible())throw Error("Academy leaked into sector: "+key);
+   if((await page.locator("#careerList article").count())<3)throw Error("Sector has no subcategories: "+key);
+   await page.locator('a[href="#home"]').first().click();
+  }
+  await page.locator('[data-admission-direct]').click();
+  if(!(await page.locator("#academy").isVisible()))throw Error("Admission category not visible");
+  if(await page.locator("#academyAdmission").getAttribute("aria-pressed")!=="true")throw Error("Admission tab not selected");
+  await page.locator('a[href="#home"]').first().click();
   await page.locator("#homeBCS").click();
   if(!(await page.locator("#bcsRoadmap").isVisible()))throw Error("Home BCS did not open BCS course directly");
   if(await page.locator("#academyAdmission").isVisible())throw Error("Admission shown after opening BCS from home");
