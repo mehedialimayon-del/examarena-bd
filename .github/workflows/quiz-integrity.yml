@@ -1,0 +1,17 @@
+name: Quiz integrity
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  quiz:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate quiz
+        run: node tests/quiz.test.cjs
