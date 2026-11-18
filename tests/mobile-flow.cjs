@@ -3,7 +3,6 @@ const {chromium}=require("playwright");
 const fs=require("node:fs");
 const http=require("node:http");
 const path=require("node:path");
-const os=require("node:os");
 (async()=>{
  const server=http.createServer((req,res)=>{if(req.url!=="/"&&req.url!=="/index.html"){res.writeHead(404);res.end();return}res.writeHead(200,{"Content-Type":"text/html; charset=utf-8"});res.end(fs.readFileSync(path.resolve("index.html")))});
  await new Promise(resolve=>server.listen(0,"127.0.0.1",resolve));
