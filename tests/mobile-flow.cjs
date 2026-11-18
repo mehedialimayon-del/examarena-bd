@@ -38,7 +38,8 @@ const path=require("node:path");
   await page.locator('[data-bcs-stage="prelim"]').click();
   if(!(await page.locator("#officialSyllabus").isVisible()))throw Error("Prelim syllabus missing when prelim selected");
   if(await page.locator("#academyAdmission").isVisible())throw Error("Admission tab still visible inside BCS course");
-  for(const heading of ["পরীক্ষা ও বিধিমালা","প্রিলিমিনারি","লিখিত","ভাইভা"]){if(!(await page.locator("#bcsRoadmap").innerText()).includes(heading))throw Error("BCS stage missing: "+heading)}
+  for(const [stage,heading] of [["rules","পরীক্ষা ও বিধিমালা"],["prelim","প্রিলিমিনারি"],["written","লিখিত"],["viva","ভাইভা"]]){await page.locator(`[data-bcs-stage="${stage}"]`).click();if(!(await page.locator("#bcsRoadmap .bcs-stage-grid article:visible").innerText()).includes(heading))throw Error("BCS stage missing: "+heading)}
+  await page.locator('[data-bcs-stage="prelim"]').click();
 
   await page.locator("#courseSave").click();
   if(!(await page.locator("#courseSaved").innerText()).includes("সংরক্ষিত"))throw Error("Goal save failed");
