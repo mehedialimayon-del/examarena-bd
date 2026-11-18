@@ -14,6 +14,12 @@ const path=require("node:path");
   const errors=[];page.on("pageerror",error=>errors.push(error.message));
   await page.goto("http://127.0.0.1:"+server.address().port+"/");
   if(!(await page.locator("#portalHub").isVisible()))throw Error("Category hub hidden on initial homepage");
+  const brandLogo=page.locator(".logo-mark img");
+  if(await brandLogo.getAttribute("src")!=="assets/examarena-logo.svg")throw Error("Supplied brand logo missing from fixed header");
+  if(!(await brandLogo.evaluate(img=>img.complete&&img.naturalWidth>0)))throw Error("Brand logo failed to load");
+  const hubButtonBg=await page.locator("#portalHub .portal-grid button").first().evaluate(el=>getComputedStyle(el).backgroundImage);
+  if(!hubButtonBg.includes("gradient"))throw Error("Premium category card background missing");
+
   if(await page.locator("#academy").isVisible())throw Error("Academy leaked into initial homepage");
   for(const key of ["government","bank","private","defense","academic","english"]){
    await page.locator(`[data-career="${key}"]`).click();
