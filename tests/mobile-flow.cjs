@@ -38,6 +38,10 @@ const path=require("node:path");
   page.once("dialog",dialog=>dialog.dismiss());
   await page.locator('.mobile-nav a[href="#academy"]').click();
   if(!(await page.locator("#quiz").isVisible()))throw Error("Cancelled Academy navigation interrupted active quiz");
+  page.once("dialog",dialog=>dialog.dismiss());
+  await page.locator("#portalBack").click();
+  if(!(await page.locator("#quiz").isVisible()))throw Error("Cancelled Back navigation interrupted active quiz");
+  if(!(await page.locator("#progress").innerText()).includes("1 / 15"))throw Error("Cancelled navigation reset question progress");
   for(let i=0;i<15;i++){
    if(i===14){await page.locator("#skip").click();continue}
    await page.locator("#options button").first().click();
