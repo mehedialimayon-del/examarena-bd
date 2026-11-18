@@ -70,6 +70,14 @@ const path=require("node:path");
   if(!(await page.locator('[data-bcs-stage="viva"]').getAttribute("aria-pressed")==="true"))throw Error("Viva stage not selected");
   await page.locator('[data-bcs-stage="prelim"]').click();
   if(!(await page.locator("#officialSyllabus").isVisible()))throw Error("Prelim syllabus missing when prelim selected");
+  await page.locator("#bcsSubjectFilter").selectOption("ইংরেজি ভাষা ও সাহিত্য");
+  if(!(await page.locator("#bcsChapterCount").innerText()).includes("১টি বিষয়"))throw Error("BCS subject filter failed");
+  await page.locator("#bcsChapterList .bcs-chapter-row button").first().click();
+  if(!(await page.locator("#bcsChapterPreview").isVisible()))throw Error("BCS chapter preview failed");
+  if(!(await page.locator("#bcsPreviewTitle").innerText()).includes("Parts of Speech"))throw Error("BCS chapter preview selected wrong chapter");
+  await page.locator("#bcsPreviewClose").click();
+  await page.locator("#bcsSubjectFilter").selectOption("all");
+
   if(await page.locator("#academyAdmission").isVisible())throw Error("Admission tab still visible inside BCS course");
   for(const [stage,heading] of [["rules","পরীক্ষা ও বিধিমালা"],["prelim","প্রিলিমিনারি"],["written","লিখিত"],["viva","ভাইভা"]]){await page.locator(`[data-bcs-stage="${stage}"]`).click();if(!(await page.locator("#bcsRoadmap .bcs-stage-grid article:visible").innerText()).includes(heading))throw Error("BCS stage missing: "+heading)}
   await page.locator('[data-bcs-stage="prelim"]').click();
