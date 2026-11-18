@@ -55,6 +55,8 @@ const path=require("node:path");
    if(await page.locator("#chapterAssessment").isVisible())throw Error("Partial retry incorrectly marked as full chapter");
    if(await page.locator("#chapterProgress").isVisible())throw Error("Partial retry incorrectly saved as full chapter progress");
   }
+  await page.locator("#portalBack").click();
+  if(!(await page.locator("#bcsLesson").isVisible()))throw Error("Back from result did not restore BCS lesson");
   await page.locator('a[href="#home"]').last().click();
   if(!(await page.locator("#dashboardLatest").innerText()).includes("15"))throw Error("Dashboard did not update");
   await page.reload();
