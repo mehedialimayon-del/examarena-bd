@@ -42,6 +42,9 @@ const path=require("node:path");
   if(!(await page.locator("#bcsRoadmap").isVisible()))throw Error("Home BCS did not open BCS course directly");
   await page.locator("#bcsBatch").selectOption("prelim");
   await page.locator("#bcsStudyMinutes").selectOption("60");
+  await page.locator("#bcsDaysLeft").fill("2");
+  await page.locator("#bcsReadiness").selectOption("beginner");
+  if(!(await page.locator("#bcsDailyPlan").innerText()).includes("শেষ মুহূর্তের"))throw Error("Two-day BCS revision strategy missing");
   await page.locator("#bcsSavePlan").click();
   if(!(await page.locator("#bcsPlanStatus").innerText()).includes("সংরক্ষিত"))throw Error("BCS study plan was not saved");
 
@@ -50,6 +53,12 @@ const path=require("node:path");
   if(!(await page.locator("#bcsRoadmap").isVisible()))throw Error("BCS course lost on refresh");
   if(await page.locator("#bcsBatch").inputValue()!=="prelim")throw Error("BCS batch lost on refresh");
   if(await page.locator("#bcsStudyMinutes").inputValue()!=="60")throw Error("BCS daily study time lost on refresh");
+  if(await page.locator("#bcsDaysLeft").inputValue()!=="2")throw Error("BCS exam countdown lost on refresh");
+  await page.locator("#bcsDaysLeft").fill("1");
+  if(!(await page.locator("#bcsDailyPlan").innerText()).includes("প্রবেশপত্র"))throw Error("One-day exam checklist missing");
+  await page.locator("#bcsDaysLeft").fill("365");
+  if(!(await page.locator("#bcsDailyPlan").innerText()).includes("মোট সম্ভাব্য সময়"))throw Error("Long-term BCS time budget missing");
+
 
   if(await page.locator("#academyAdmission").isVisible())throw Error("Admission shown after BCS refresh");
   await page.locator('a[href="#home"]').first().click();
