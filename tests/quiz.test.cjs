@@ -46,3 +46,14 @@ assert.match(html,/id="academyJobs"/,"job academy tab");
 assert.match(html,/id="academyAdmission"/,"admission academy tab");
 assert.match(html,/class="mobile-nav"/,"mobile bottom navigation");
 assert.match(html,/পূর্ণ কোর্স প্রস্তুত হচ্ছে/,"unavailable courses clearly labeled");
+
+// Startup regression: Academy handlers must not run before the DOM lookup helper exists.
+const initScript=script[1];
+const lookupPosition=initScript.indexOf('const $=id=>document.getElementById(id);');
+const firstAcademyHandler=initScript.indexOf('$("academyJobs").onclick');
+assert.ok(lookupPosition>=0&&firstAcademyHandler>lookupPosition,"DOM helper is initialized before Academy handlers");
+assert.ok(initScript.includes('showStats();renderDashboard();'),"Dashboard initializes on page load");
+for(const id of ["myDashboard","dashboardGoal","dashboardLatest","dashboardAdvice","dashboardTasks","dashboardContinue","academyCourses","courseDetail","bcsLessonQuiz","chapterProgress"]){
+ assert.match(html,new RegExp('id="'+id+'"'),id+" exists");
+}
+console.log("PASS: startup order and learner dashboard regression checks");
