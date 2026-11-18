@@ -61,6 +61,14 @@ const path=require("node:path");
   await page.locator("#bcsDaysLeft").fill("365");
   if(!(await page.locator("#bcsDailyPlan").innerText()).includes("মোট সম্ভাব্য সময়"))throw Error("Long-term BCS time budget missing");
   if(await page.locator("#bcsWeekPreview article").count()!==7)throw Error("Seven-day preview missing");
+  const beforeBCS=await page.locator("#bcsCompletedCount").innerText();
+  const beforeRemaining=await page.locator("#bcsFeasibility").innerText();
+  await page.locator("#bcsWeekPreview article input[type=checkbox]").first().check();
+  if(await page.locator("#bcsCompletedCount").innerText()===beforeBCS)throw Error("BCS chapter completion did not update");
+  if(await page.locator("#bcsFeasibility").innerText()===beforeRemaining)throw Error("BCS remaining syllabus estimate did not recalculate");
+  await page.reload();
+  if(!(await page.locator("#bcsCompletedCount").innerText()).includes("1/"))throw Error("BCS chapter completion did not persist after refresh");
+
   if(!(await page.locator("#bcsFeasibility").innerText()).includes("প্রাথমিক অধ্যায়"))throw Error("BCS chapter estimate missing");
   await page.locator("#bcsDaysLeft").fill("-1");
   if(await page.locator("#bcsWeekPreview article").count()!==0)throw Error("Invalid days retained stale preview");
