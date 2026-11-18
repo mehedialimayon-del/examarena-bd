@@ -64,3 +64,7 @@ assert.match(html,/A&amp;N Overseas Education &amp; Consultancy/, "Optional cons
 assert.match(html,/ExamArena-তে পড়তে এই সেবা নেওয়া বাধ্যতামূলক নয়/, "Consultancy is optional");
 assert.match(html,/দেশ, বিশ্ববিদ্যালয়, ডিগ্রি ও প্রোগ্রামভেদে শর্ত আলাদা/, "Country requirements qualified");
 console.log("PASS: study abroad section content and independence checks");
+
+assert.match(html,/function showAcademy\(group\)\{\$\("academyCourses"\)\.classList\.remove\("hidden"\)/,"Switching academy tabs restores course list");
+assert.match(html,/goal&&goal\.group==="jobs"&&goal\.name==="BCS"\?history\[history\.length-1\]:null/,"BCS result is not shown for other courses");
+console.log("PASS: academy tab visibility and course-scoped dashboard assertions");
