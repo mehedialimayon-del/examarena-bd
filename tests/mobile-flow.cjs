@@ -3,13 +3,15 @@ const {chromium}=require("playwright");
 const fs=require("node:fs");
 const http=require("node:http");
 const path=require("node:path");
+const os=require("node:os");
 (async()=>{
  const server=http.createServer((req,res)=>{if(req.url!=="/"&&req.url!=="/index.html"){res.writeHead(404);res.end();return}res.writeHead(200,{"Content-Type":"text/html; charset=utf-8"});res.end(fs.readFileSync(path.resolve("index.html")))});
  await new Promise(resolve=>server.listen(0,"127.0.0.1",resolve));
  let browser;
+ let page;
  try{
   browser=await chromium.launch({headless:true});
-  const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+  page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
   const errors=[];page.on("pageerror",error=>errors.push(error.message));
   await page.goto("http://127.0.0.1:"+server.address().port+"/");
   await page.locator("#academyJobs").click();
@@ -58,5 +60,10 @@ const path=require("node:path");
   if(!(await page.locator("#dashboardGoal").innerText()).includes("মেডিকেল ভর্তি"))throw Error("Admission goal not persistent");
   if(errors.length)throw Error("Browser errors: "+errors.join(" | "));
   console.log("PASS: mobile academy → course → save → chapter → quiz → result → dashboard → reload");
+ }catch(error){
+  if(page){
+   try{const output=path.resolve("test-artifacts");fs.mkdirSync(output,{recursive:true});await page.screenshot({path:path.join(output,"mobile-failure.png"),fullPage:true,timeout:10000});fs.writeFileSync(path.join(output,"mobile-failure.txt"),String(error.stack||error)+"\\nURL: "+page.url()+"\\n");console.error("Browser failure screenshot and details saved in test-artifacts/")}catch(captureError){console.error("Could not capture failure:",captureError.message)}
+  }
+  throw error;
  }finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve))}
 })().catch(err=>{console.error(err);process.exitCode=1});
