@@ -123,3 +123,7 @@ console.log("PASS: focused navigation safety and refresh regression checks");
 
 assert.match(html,/function saveChapterProgress\(\)\{if\(topic!==chapterPracticeTopic\|\|active\.length!==bcsLessonQuestions\.length\)return null/,"Partial or mismatched chapter attempt must not be saved as full assessment");
 console.log("PASS: full-length chapter progress persistence guard");
+
+assert.match(html,/x\.total===bcsLessonQuestions\.length&&x\.score>=0/,"Legacy partial attempts are excluded from chapter dashboard history");
+assert.match(html,/function start\(\)\{if\(!validateBank\(\)\)/,"Quiz validates bank before changing screen");
+console.log("PASS: legacy partial history filtering and pre-navigation validation");
