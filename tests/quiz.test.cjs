@@ -120,3 +120,6 @@ assert.match(html,/if\(portalOpen\(id\)===false\)event\.preventDefault\(\)/,"Can
 assert.match(html,/sessionStorage\.setItem\("examarena_portal_screen",id\)/,"Focused section persisted for refresh");
 assert.match(html,/while\(previous==="quiz"\|\|previous==="result"\)/,"Back skips intermediate quiz/result screens");
 console.log("PASS: focused navigation safety and refresh regression checks");
+
+assert.match(html,/function saveChapterProgress\(\)\{if\(topic!==chapterPracticeTopic\|\|active\.length!==bcsLessonQuestions\.length\)return null/,"Partial or mismatched chapter attempt must not be saved as full assessment");
+console.log("PASS: full-length chapter progress persistence guard");
