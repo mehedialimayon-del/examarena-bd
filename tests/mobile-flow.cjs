@@ -33,6 +33,7 @@ const path=require("node:path");
   await page.locator("#bcsLessonQuiz").click();
   if(await page.locator("#quiz").evaluate(el=>el.classList.contains("hidden")))throw Error("Quiz did not open");
   for(let i=0;i<15;i++){
+   if(i===14){await page.locator("#skip").click();continue}
    await page.locator("#options button").first().click();
    await page.locator("#next").click();
   }
@@ -42,6 +43,7 @@ const path=require("node:path");
   if(!(await page.locator("#chapterAssessment").innerText()).includes("অফিসিয়াল পাস নম্বর নয়"))throw Error("Unofficial assessment disclaimer missing");
   // Revisit only missed answers; a partial retry must not be a full-chapter assessment.
   const missedCount=await page.locator('#review [data-outcome]:not([data-outcome="correct"])').count();
+  if(missedCount<1)throw Error("Skipped question was not marked for retry");
   if(missedCount>0){
    await page.locator("#retryMistakes").click();
    if(!(await page.locator("#quiz").isVisible()))throw Error("Mistake retry did not open");
@@ -63,6 +65,7 @@ const path=require("node:path");
   if(!Number.isInteger(saved[0].score)||saved[0].score<0||saved[0].score>15)throw Error("Invalid saved chapter score");
   // Switching to an unrelated course must not show BCS chapter scores.
   await page.locator('a[href="#academy"]').first().click();
+  if(!(await page.locator("#academy").isVisible()))throw Error("Academy navigation from results failed");
   await page.locator("#academyAdmission").click();
   await page.locator("#academyCourses button").first().click();
   await page.locator("#courseSave").click();
