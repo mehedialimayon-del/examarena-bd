@@ -13,6 +13,8 @@ const path=require("node:path");
   page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
   const errors=[];page.on("pageerror",error=>errors.push(error.message));
   await page.goto("http://127.0.0.1:"+server.address().port+"/");
+  await page.locator('[data-portal="academy"]').click();
+  if(!(await page.locator("#academy").isVisible()))throw Error("Academy screen not visible");
   await page.locator("#academyJobs").click();
   await page.locator("#academyCourses button").first().click();
   await page.locator("#courseSave").click();
@@ -51,6 +53,7 @@ const path=require("node:path");
   if(saved.length!==1||saved[0].chapterId!=="bcs-bangla-grammar-01"||saved[0].total!==15)throw Error("Full chapter history missing or partial retry was persisted");
   if(!Number.isInteger(saved[0].score)||saved[0].score<0||saved[0].score>15)throw Error("Invalid saved chapter score");
   // Switching to an unrelated course must not show BCS chapter scores.
+  await page.locator('a[href="#academy"]').first().click();
   await page.locator("#academyAdmission").click();
   await page.locator("#academyCourses button").first().click();
   await page.locator("#courseSave").click();
