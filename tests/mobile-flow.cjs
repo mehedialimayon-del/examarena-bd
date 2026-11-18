@@ -26,7 +26,7 @@ const path=require("node:path");
   if(!(await page.locator("#academy").isVisible()))throw Error("Admission category not visible");
   if(await page.locator("#academyAdmission").getAttribute("aria-pressed")!=="true")throw Error("Admission tab not selected");
   await page.locator('a[href="#home"]').first().click();
-  for(const [target,heading] of [["kidsCoaching","শিশুদের ক্রিয়েটিভ কোচিং"],["membershipGuide","ফ্রি শেখা ও ভবিষ্যৎ সাবস্ক্রিপশন"]]){
+  for(const [target,heading] of [["cadetCoaching","ক্যাডেট কলেজ ভর্তি কোচিং"],["kidsCoaching","শিশুদের ক্রিয়েটিভ কোচিং"],["membershipGuide","ফ্রি শেখা ও ভবিষ্যৎ সাবস্ক্রিপশন"]]){
    await page.locator(`[data-portal="${target}"]`).click();
    if(!(await page.locator("#"+target).isVisible()))throw Error("Learning section hidden: "+target);
    if(!(await page.locator("#"+target).innerText()).includes(heading))throw Error("Section heading missing: "+target);
