@@ -102,3 +102,8 @@ for(const [questionPart,explanationPart] of [
  assert.ok(item.e.includes(explanationPart),"Contextual explanation exists: "+questionPart);
 }
 console.log("PASS: contextual answer explanations");
+
+assert.match(html,/id="chapterAssessment"/,"Chapter assessment status element exists");
+assert.match(html,/fullChapter=topic===chapterPracticeTopic&&active\.length===bcsLessonQuestions\.length/,"Assessment only for full chapter quiz");
+assert.match(html,/BCS-এর অফিসিয়াল পাস নম্বর নয়/,"No official pass threshold claim");
+console.log("PASS: full-chapter assessment safeguards");
