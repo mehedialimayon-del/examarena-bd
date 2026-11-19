@@ -14,7 +14,6 @@ public class MainActivity extends Activity {
  @Override public void onCreate(Bundle state){super.onCreate(state);web=new WebView(this);web.getSettings().setJavaScriptEnabled(true);web.getSettings().setDomStorageEnabled(true);web.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);web.getSettings().setAllowFileAccess(false);web.getSettings().setAllowContentAccess(false);web.setWebChromeClient(new WebChromeClient());web.setWebViewClient(new WebViewClient(){
  @Override public boolean shouldOverrideUrlLoading(WebView v,WebResourceRequest req){Uri u=req.getUrl();if("https".equals(u.getScheme())&&"mehedialimayon-del.github.io".equals(u.getHost())&&u.getPath().startsWith("/examarena-bd/"))return false;try{startActivity(new Intent(Intent.ACTION_VIEW,u));}catch(Exception ignored){}return true;}
  });setContentView(web);web.loadUrl(SITE);}
- @Override protected void onResume(){super.onResume();if(web!=null){web.clearCache(false);web.reload();}}
  @Override public void onBackPressed(){if(web!=null&&web.canGoBack())web.goBack();else super.onBackPressed();}
  @Override protected void onDestroy(){if(web!=null){web.destroy();web=null;}super.onDestroy();}
 }
