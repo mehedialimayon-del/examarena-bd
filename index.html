@@ -743,4 +743,43 @@ body.addEventListener("change",e=>{if(e.target.id!=="jwDate")return;const value=
 
 /* Bind the eight artwork feature buttons to the existing page navigation. */
 (function(){document.addEventListener('click',function(e){const b=e.target.closest('[data-ea-open]');if(!b)return;const id=b.getAttribute('data-ea-open');if(typeof portalOpen==='function')portalOpen(id);else document.getElementById(id)?.scrollIntoView();});function measureNav(){const n=document.querySelector('.mobile-nav');if(n)document.documentElement.style.setProperty('--ea-nav-height',Math.ceil(n.getBoundingClientRect().height)+'px')}window.addEventListener('resize',measureNav,{passive:true});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',measureNav);else measureNav()})();
-</script><nav class="mobile-nav" aria-label="মোবাইল নেভিগেশন"><a href="#home"><span aria-hidden="true">⌂</span>হোম</a><a href="#academy"><span aria-hidden="true">▦</span>একাডেমি</a><a href="#mockArea"><span aria-hidden="true">◷</span>মক টেস্ট</a><a href="#historyArea"><span aria-hidden="true">▥</span>ফলাফল</a><a href="#myDashboard"><span aria-hidden="true">♙</span>আমার প্রোফাইল</a></nav></body></html>
+</script><nav class="mobile-nav" aria-label="মোবাইল নেভিগেশন"><a href="#home"><span aria-hidden="true">⌂</span>হোম</a><a href="#academy"><span aria-hidden="true">▦</span>একাডেমি</a><a href="#mockArea"><span aria-hidden="true">◷</span>মক টেস্ট</a><a href="#historyArea"><span aria-hidden="true">▥</span>ফলাফল</a><a href="#myDashboard"><span aria-hidden="true">♙</span>আমার প্রোফাইল</a></nav><script>
+/* Detect a blank band baked into the homepage PNG; preserve the same mapping for labels and buttons. */
+(function(){
+ function alignReference(){
+  if(!matchMedia('(max-width:700px)').matches)return;
+  const frame=document.querySelector('#portalHub>.ea-reference-screen');
+  const img=frame?.querySelector('.ea-reference-image');
+  if(!img||!img.complete||!img.naturalWidth)return;
+  try{
+   const canvas=document.createElement('canvas');canvas.width=100;canvas.height=220;
+   const ctx=canvas.getContext('2d',{willReadFrequently:true});
+   ctx.drawImage(img,0,0,100,220);
+   const data=ctx.getImageData(0,0,100,220).data;
+   let first=0;
+   for(let y=2;y<70;y++){
+    let min=255,max=0,contrasts=0;
+    for(let x=3;x<97;x+=3){
+     const k=(y*100+x)*4;
+     const v=Math.round((data[k]*299+data[k+1]*587+data[k+2]*114)/1000);
+     min=Math.min(min,v);max=Math.max(max,v);
+     if(x>3){const p=(y*100+x-3)*4;const old=Math.round((data[p]*299+data[p+1]*587+data[p+2]*114)/1000);if(Math.abs(v-old)>32)contrasts++;}
+    }
+    if(max-min>75&&contrasts>=3){first=y;break;}
+   }
+   const fraction=first>14?Math.min(.22,Math.max(0,(first-3)/220)):0;
+   const h=(100/(1-fraction)).toFixed(3)+'%';
+   const t=(-100*fraction/(1-fraction)).toFixed(3)+'%';
+   [img,frame.querySelector('.ea-reference-copy'),frame.querySelector('.ea-reference-hotspots')].filter(Boolean).forEach(el=>{
+    el.style.setProperty('top',t,'important');
+    el.style.setProperty('height',h,'important');
+    el.style.setProperty('bottom','auto','important');
+    el.style.setProperty('inset','auto 0 auto 0','important');
+   });
+  }catch(e){/* Preserve full PNG if pixel inspection is unavailable. */}
+ }
+ function init(){const img=document.querySelector('#portalHub>.ea-reference-screen>.ea-reference-image');if(!img)return;img.addEventListener('load',alignReference);alignReference();}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+</body></html>
