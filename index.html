@@ -443,21 +443,22 @@ body.portal-home .ea-reference-hit:nth-child(9),body.portal-home .ea-reference-h
  body.portal-home header{z-index:31!important}
 }
 
-/* ExamArena fixed-screen layout calibrated against the supplied Samsung screenshot:
-   source has blank bands above and below artwork. One transform for all 3 layers. */
+/* Keep artwork and interactive labels in separate coordinate systems.
+   Remove previous hard-coded 140% image stretch and align text to original reference. */
 @media(max-width:700px){
- body.portal-home #portalHub>.ea-reference-screen>.ea-reference-image,
+ body.portal-home #portalHub>.ea-reference-screen>.ea-reference-image{
+  position:absolute!important;inset:0!important;top:0!important;left:0!important;
+  width:100%!important;height:100%!important;object-fit:fill!important;transform:none!important;
+ }
  body.portal-home #portalHub>.ea-reference-screen>.ea-reference-copy,
  body.portal-home #portalHub>.ea-reference-screen>.ea-reference-hotspots{
-  inset:-25% 0 auto 0!important;top:-25%!important;left:0!important;
-  right:0!important;bottom:auto!important;width:100%!important;
-  height:140%!important;transform:none!important;
+  position:absolute!important;inset:0!important;top:0!important;left:0!important;
+  width:100%!important;height:100%!important;transform:none!important;
  }
- body.portal-home .ea-reference-hit{height:6.1%!important;padding:0 3% 0 21%!important}
+ body.portal-home .ea-reference-hit{height:6.6%!important;padding:0 4% 0 21%!important}
  body.portal-home .ea-reference-hit .ea-hit-copy{gap:0!important}
- body.portal-home .ea-reference-hit .ea-hit-copy strong{font-size:clamp(8px,2.05vw,14px)!important;line-height:1.02!important}
- body.portal-home .ea-reference-hit .ea-hit-copy small{font-size:clamp(6px,1.15vw,9px)!important;line-height:1.03!important;max-height:2.1em;overflow:hidden}
- body.portal-home .ea-art-features button{font-size:clamp(7px,1.65vw,11px)!important;line-height:1!important}
+ body.portal-home .ea-reference-hit .ea-hit-copy strong{font-size:clamp(9px,2.15vw,15px)!important;line-height:1.05!important}
+ body.portal-home .ea-reference-hit .ea-hit-copy small{font-size:clamp(6px,1.2vw,9px)!important;line-height:1.05!important;max-height:2.1em;overflow:hidden}
 }
 </style></head><body class="portal-home">
 <header><div class="topbar"><a class="brand" href="#home" aria-label="ExamArena BD হোম"><span class="logo-mark" aria-hidden="true"><img src="assets/examarena-logo.svg" width="52" height="52" alt="" decoding="async"></span><strong>EXAM<em>ARENA</em> BD<small>LEARN · PRACTICE · GROW</small></strong></a><nav class="topnav" aria-label="প্রধান মেনু"><a href="#academy">একাডেমি</a><a href="#accessProgram">শিক্ষাসহায়তা</a><a href="#examTracks">প্রস্তুতি</a><a href="#subjects">বিষয়</a><a href="#mockArea">মক টেস্ট</a><a href="#historyArea">ফলাফল</a><a class="nav-cta" href="#examTracks">শুরু করুন</a></nav></div><div class="notice-strip" aria-label="যাচাইকৃত আবেদন ও ভর্তি বিজ্ঞপ্তি"><strong>📢 আবেদন আপডেট</strong><div class="notice-window"><div class="notice-flow" id="noticeFlow"><a href="https://admission.kuet.ac.bd/" target="_blank" rel="noopener noreferrer" data-deadline="2026-12-10T23:59:59+06:00">KUET ভর্তি ২০২৬–২৭ · আবেদন শেষ ১০ ডিসেম্বর · অফিসিয়াল সাইট ↗</a><a href="https://bou.ac.bd/public/index.php/BOU/Admission" target="_blank" rel="noopener noreferrer" data-deadline="2026-11-30T23:59:59+06:00">বাংলাদেশ উন্মুক্ত বিশ্ববিদ্যালয় MBA · শেষ ৩০ নভেম্বর · অফিসিয়াল সাইট ↗</a><a href="https://alljobs.teletalk.com.bd/" target="_blank" rel="noopener noreferrer">সরকারি চাকরির সর্বশেষ বিজ্ঞপ্তি · Teletalk অফিসিয়াল পোর্টাল ↗</a></div></div><span class="notice-date">তথ্য যাচাই: ১৮ নভেম্বর ২০২৬</span></div></header>
