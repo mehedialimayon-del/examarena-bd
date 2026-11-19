@@ -20,9 +20,13 @@ jobs:
         with:
           gradle-version: '8.10.2'
       - uses: android-actions/setup-android@v3
+      - name: Install Android SDK 35 and build tools
+        run: |
+          sdkmanager --install 'platforms;android-35' 'build-tools;35.0.0'
+          sdkmanager --licenses < /dev/null || true
       - name: Build installable debug APK
         working-directory: android-app
-        run: gradle --no-daemon --console plain assembleDebug
+        run: gradle --no-daemon --console plain --stacktrace assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: ExamArena-BD-Android-APK
