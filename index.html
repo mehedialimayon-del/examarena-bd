@@ -573,7 +573,7 @@ html body #eaHomeRescue .ehr-copy small{font-size:7px!important}
 html body #eaHomeRescue{
  display:grid!important;
  grid-template-columns:minmax(0,1fr)!important;
- grid-template-rows:minmax(0,2.65fr) minmax(0,.48fr) minmax(0,5.05fr) minmax(0,.48fr) minmax(0,2.08fr) minmax(0,.55fr)!important;
+ grid-template-rows:minmax(0,2.25fr) minmax(0,.44fr) minmax(0,5.95fr) minmax(0,.44fr) minmax(0,2.45fr) minmax(0,.52fr)!important;
  gap:clamp(5px,.65dvh,9px)!important;
  padding:clamp(6px,.7dvh,9px) 10px!important;
  align-content:stretch!important;
@@ -617,6 +617,24 @@ html body #eaHomeRescue .ehr-copy small{font-size:clamp(7px,1.9vw,11px)!importan
 html body #eaHomeRescue>.ehr-features{grid-template-rows:repeat(2,minmax(0,1fr))!important}
 html body #eaHomeRescue>.ehr-features button{height:100%!important;min-height:0!important;overflow:hidden!important}
 html body #eaHomeRescue>.ehr-stats{align-self:stretch!important}
+}
+
+/* Mobile screenshot correction: prioritize usable card heights and avoid text collisions. */
+@media (max-width:850px){
+html body #eaHomeRescue>.ehr-grid{gap:clamp(7px,.85dvh,11px)!important}
+html body #eaHomeRescue>.ehr-grid button{padding:5px 8px!important;gap:8px!important;align-items:center!important;box-shadow:inset 0 2px 2px #fff,0 4px 8px #077cbb52!important}
+html body #eaHomeRescue .ehr-icon{flex:0 0 clamp(29px,8vw,44px)!important;text-align:center!important;font-size:clamp(24px,6.2vw,37px)!important}
+html body #eaHomeRescue .ehr-copy{min-width:0!important;overflow:hidden!important}
+html body #eaHomeRescue .ehr-copy strong{font-size:clamp(10px,2.9vw,16px)!important;line-height:1.14!important;overflow-wrap:anywhere!important}
+html body #eaHomeRescue .ehr-copy small{font-size:clamp(7px,1.85vw,10px)!important;line-height:1.15!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important}
+html body #eaHomeRescue .ehr-grid b{flex:0 0 auto!important}
+html body #eaHomeRescue>.ehr-features{padding:6px!important;gap:6px!important}
+html body #eaHomeRescue>.ehr-features button{border-radius:15px!important;padding:3px!important;box-shadow:inset 0 2px 2px #fff,0 4px 8px #138ed15e!important}
+html body #eaHomeRescue .ehr-features span{font-size:clamp(19px,5vw,30px)!important}
+html body #eaHomeRescue .ehr-features strong{font-size:clamp(7px,1.9vw,11px)!important;line-height:1.14!important}
+html body #eaHomeRescue .ehr-hero-copy strong{font-size:clamp(18px,5vw,29px)!important}
+html body #eaHomeRescue .ehr-hero-copy p{font-size:clamp(8px,2.05vw,11px)!important}
+html body #eaHomeRescue .ehr-five{height:100%!important}
 }
 </style></head><body class="portal-home">
 <header><div class="topbar"><a class="brand" href="#home" aria-label="ExamArena BD হোম"><span class="logo-mark" aria-hidden="true"><img src="assets/examarena-logo.svg" width="52" height="52" alt="" decoding="async"></span><strong>EXAM<em>ARENA</em> BD<small>LEARN · PRACTICE · GROW</small></strong></a><nav class="topnav" aria-label="প্রধান মেনু"><a href="#academy">একাডেমি</a><a href="#accessProgram">শিক্ষাসহায়তা</a><a href="#examTracks">প্রস্তুতি</a><a href="#subjects">বিষয়</a><a href="#mockArea">মক টেস্ট</a><a href="#historyArea">ফলাফল</a><a class="nav-cta" href="#examTracks">শুরু করুন</a></nav></div><div class="notice-strip" aria-label="যাচাইকৃত আবেদন ও ভর্তি বিজ্ঞপ্তি"><strong>📢 আবেদন আপডেট</strong><div class="notice-window"><div class="notice-flow" id="noticeFlow"><a href="https://admission.kuet.ac.bd/" target="_blank" rel="noopener noreferrer" data-deadline="2026-12-10T23:59:59+06:00">KUET ভর্তি ২০২৬–২৭ · আবেদন শেষ ১০ ডিসেম্বর · অফিসিয়াল সাইট ↗</a><a href="https://bou.ac.bd/public/index.php/BOU/Admission" target="_blank" rel="noopener noreferrer" data-deadline="2026-11-30T23:59:59+06:00">বাংলাদেশ উন্মুক্ত বিশ্ববিদ্যালয় MBA · শেষ ৩০ নভেম্বর · অফিসিয়াল সাইট ↗</a><a href="https://alljobs.teletalk.com.bd/" target="_blank" rel="noopener noreferrer">সরকারি চাকরির সর্বশেষ বিজ্ঞপ্তি · Teletalk অফিসিয়াল পোর্টাল ↗</a></div></div><span class="notice-date">তথ্য যাচাই: ১৮ নভেম্বর ২০২৬</span></div></header>
