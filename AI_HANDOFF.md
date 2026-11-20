@@ -60,3 +60,9 @@ Last visual polish commit before this handoff: bdb023f7c2e362893baa4c98eb3cae58b
 - Verified by source readback: 5 icon wrappers, 10 categories, 8 features, one mobile nav. Inline JS syntax parsed before commit.
 - Pending: actual Android browser screenshot/click and viewport overflow tests. Do not claim visual PASS until device confirms.
 - Next: compare fresh phone screenshot for clipping/overlap, refine only demonstrated issues, commit and update this handoff.
+
+## 01:22 screenshot icon clipping follow-up — 2026-11-21
+- Commit 3e2f1e529d92a7d19b333ac6c78e4ce841a94446: replaced mobile icon-strip flex glyph placement with two-row grid inside each of five fixed-height cells; explicit top padding, glyph font size/line height and overflow containment to prevent painting above strip top border. Outer hero/page dimensions, category/feature markup and fixed nav unchanged.
+- Source readback: five icon wrappers, ten category buttons, eight feature buttons. Inline JS syntax checked before commit.
+- Pending: physical Samsung browser screenshot and click/overflow QA. Do not claim visual pass without a fresh screenshot.
+- Next: compare fresh screenshot, then only fix verified remaining overlap or clipping. Update handoff after each verified change.
