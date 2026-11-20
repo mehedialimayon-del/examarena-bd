@@ -43,3 +43,8 @@ Last visual polish commit before this handoff: bdb023f7c2e362893baa4c98eb3cae58b
 - Commit 85d457b15748f85e36cd1203e9769bb4d7458701: refined SVG cap/book highlights, blue hero gradients, glossy colored category cards and feature shadows in index.html.
 - Read-back verified: 10 home category buttons, 8 feature buttons and CSS/SVG changes present. JavaScript syntax parsed; actual Android browser visual/click QA still pending.
 - Next: check user phone screenshot, test navigation and responsive fit, fix any confirmed defects without changing fixed nav or existing routes.
+
+## 00:25 screenshot follow-up — 2026-11-21
+- Commit f761056c2586f457eb2e38f07f0678fc09555810 updated mobile CSS in index.html: five hero icons alignment/readability, book SVG color/shadow, glossy category/feature button shadows and text wrapping. No geometry or navigation route changes.
+- Readback verified patch present, 10 categories, 8 features, one mobile nav; inline JavaScript syntax checked before commit.
+- Actual Samsung browser interaction, pixel comparison and responsive overflow tests remain pending. Next: test or inspect real screenshot and fix only confirmed defects.
