@@ -16,6 +16,11 @@ Last visual polish commit before this handoff: bdb023f7c2e362893baa4c98eb3cae58b
 - At the end of EVERY response provide a working 'Next' button that submits a continuation prompt. User wants to tap and resume exactly where work stopped.
 - At chat limit, direct user to paste the new-chat continuation prompt below and point to this handoff file. A new chat must inspect current repo and this file; do not assume old screenshots are automatically visible. The user may need to reattach visual reference if inaccessible.
 
+## Latest verified update (2026-11-21)
+- Commit 068ec81694bdf15caf1c4de43ea11c0bbbe2c946: changed homepage Complete Syllabus shortcut from subjects to examTracks; added font-load, orientation and ResizeObserver remeasure hooks for mobile layout.
+- Verified by fetching index.html again and checking exact code and ten category/eight feature button markup. Browser/Android click testing still pending.
+- Next: test category and feature button navigation in actual browser, check mobile reference screenshot alignment and avoid duplicate CSS overrides.
+
 ## Latest implementation state
 - Most recent CSS-only visual polish appended to index.html: 'Reference polish 2026-11-21'.
 - Earlier commits: 424cd9f compact header/live ticker and fix 8 feature labels; eb845b0 inline SVG graduation cap and books; c044999 proportion changes; d0265fa reverted broken grid; other iterations precede these.
