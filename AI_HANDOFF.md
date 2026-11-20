@@ -38,3 +38,8 @@ Last visual polish commit before this handoff: bdb023f7c2e362893baa4c98eb3cae58b
 
 ## New-chat continuation prompt (copy/paste)
 'ExamArena BD-এর কাজ আগের জায়গা থেকে চালিয়ে যান। GitHub repo mehedialimayon-del/examarena-bd, main branch। প্রথমে repo-এর AI_HANDOFF.md ও বর্তমান index.html পড়ুন। শেষ কমিট, অসম্পূর্ণ কাজ, স্ক্রিনশটের থিম, fixed screen, no scroll, glossy buttons, 10 categories, 8 features, books/cap, header/ticker এবং bottom nav অনুসরণ করুন। কোনো ছবি বানাবেন না; সরাসরি কোড সংশোধন, যাচাই, Commit করুন। পূর্বের ফিচার অক্ষত রাখুন। প্রতিটি উত্তরের শেষে Next বাটন দিন।'
+
+## Latest visual update — 2026-11-21
+- Commit 85d457b15748f85e36cd1203e9769bb4d7458701: refined SVG cap/book highlights, blue hero gradients, glossy colored category cards and feature shadows in index.html.
+- Read-back verified: 10 home category buttons, 8 feature buttons and CSS/SVG changes present. JavaScript syntax parsed; actual Android browser visual/click QA still pending.
+- Next: check user phone screenshot, test navigation and responsive fit, fix any confirmed defects without changing fixed nav or existing routes.
