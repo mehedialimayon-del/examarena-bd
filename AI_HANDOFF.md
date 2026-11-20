@@ -66,3 +66,7 @@ Last visual polish commit before this handoff: bdb023f7c2e362893baa4c98eb3cae58b
 - Source readback: five icon wrappers, ten category buttons, eight feature buttons. Inline JS syntax checked before commit.
 - Pending: physical Samsung browser screenshot and click/overflow QA. Do not claim visual pass without a fresh screenshot.
 - Next: compare fresh screenshot, then only fix verified remaining overlap or clipping. Update handoff after each verified change.
+
+## 01:33 Samsung screenshot follow-up — 2026-11-21
+- Commit 5b23b23436dbc3e1d0c4ff7d02c4b103d3ddc795: identified hero description covered by icon strip, not missing icon glyphs. Latest cascade reduces strip height 32% to 27% at bottom 2%, keeps two-row grid, adjusts glyph/text padding and description font/line-height, maintains copy height 63%.
+- Verified source readback, 10 category buttons, 8 feature buttons, one mobile nav, inline JS syntax. Browser pixel and click tests still pending; request fresh Samsung screenshot before visual PASS.
