@@ -54,3 +54,9 @@ Last visual polish commit before this handoff: bdb023f7c2e362893baa4c98eb3cae58b
 - Source checks: inline JS syntax parsed, 10 home categories, 8 feature buttons, one mobile nav; readback confirmed new CSS.
 - Still pending: real Android/Samsung visual and click regression, viewport overflow tests, screenshot comparison; do not claim full visual pass without these.
 - Next: inspect new user screenshot and check for any remaining clipped Bengali text or spacing; change only confirmed defects, test and commit.
+
+## 01:20 hero icon clipping — 2026-11-21
+- Commit 6f6ad243a44b38c37e0864a1a9ca95bc9e468560: five hero emoji now have separate <b aria-hidden> glyph wrappers, mobile icon strip height 27% to 32%, icon container no longer clips glyph line boxes, copy max-height adjusted to 63%. Fixed screen outer geometry/header/ticker/footer untouched.
+- Verified by source readback: 5 icon wrappers, 10 categories, 8 features, one mobile nav. Inline JS syntax parsed before commit.
+- Pending: actual Android browser screenshot/click and viewport overflow tests. Do not claim visual PASS until device confirms.
+- Next: compare fresh phone screenshot for clipping/overlap, refine only demonstrated issues, commit and update this handoff.
