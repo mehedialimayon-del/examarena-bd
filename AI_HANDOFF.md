@@ -48,3 +48,9 @@ Last visual polish commit before this handoff: bdb023f7c2e362893baa4c98eb3cae58b
 - Commit f761056c2586f457eb2e38f07f0678fc09555810 updated mobile CSS in index.html: five hero icons alignment/readability, book SVG color/shadow, glossy category/feature button shadows and text wrapping. No geometry or navigation route changes.
 - Readback verified patch present, 10 categories, 8 features, one mobile nav; inline JavaScript syntax checked before commit.
 - Actual Samsung browser interaction, pixel comparison and responsive overflow tests remain pending. Next: test or inspect real screenshot and fix only confirmed defects.
+
+## 01:14 Samsung screenshot follow-up — 2026-11-21
+- Commit af898f12572a823db74b9c05ba00534296c69af0: mobile CSS for five hero icon spacing and labels, 10 category card text fit and 8 feature button second-row text. Existing fixed header/ticker/footer geometry and no-scroll layout not deliberately changed.
+- Source checks: inline JS syntax parsed, 10 home categories, 8 feature buttons, one mobile nav; readback confirmed new CSS.
+- Still pending: real Android/Samsung visual and click regression, viewport overflow tests, screenshot comparison; do not claim full visual pass without these.
+- Next: inspect new user screenshot and check for any remaining clipped Bengali text or spacing; change only confirmed defects, test and commit.
