@@ -770,8 +770,9 @@ html body #eaHomeRescue .ehr-hero-copy p{margin-top:3px!important;font-size:clam
 
 /* Focused homepage repair — render one mobile layer and give every tap clear feedback. */
 @media screen and (max-width:850px){
- body.portal-home main{visibility:hidden!important;pointer-events:none!important}
- body.portal-focus main{visibility:visible!important;pointer-events:auto!important}
+ body.portal-home main#home{visibility:hidden!important;pointer-events:none!important}
+ body.portal-focus main#home{visibility:visible!important;pointer-events:auto!important}
+ body.portal-home #eaHomeRescue{visibility:visible!important;pointer-events:auto!important}
  #eaHomeRescue .ehr-grid button,#eaHomeRescue .ehr-features button{transition:transform .16s ease,box-shadow .16s ease,filter .16s ease!important}
  #eaHomeRescue .ehr-grid button:hover,#eaHomeRescue .ehr-grid button:focus-visible,#eaHomeRescue .ehr-features button:hover,#eaHomeRescue .ehr-features button:focus-visible{filter:brightness(1.035)!important;box-shadow:0 0 0 2px #fff,0 0 0 4px #288cf2,0 0 16px #1789ff9c!important}
  #eaHomeRescue .ehr-grid button:active,#eaHomeRescue .ehr-features button:active{transform:scale(.97)!important;filter:brightness(1.05)!important;box-shadow:0 0 0 2px #fff,0 0 0 4px #ff8b20,0 0 20px #ff9228c7!important}
